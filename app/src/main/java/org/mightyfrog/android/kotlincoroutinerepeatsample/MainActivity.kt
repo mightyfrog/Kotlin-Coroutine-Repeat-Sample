@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener { _ ->
-            launch(Dispatchers.Main) {
+            launch {
                 repeat(10) {
                     withContext(Dispatchers.Default) {
                         Thread.sleep(1000L)
@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
             }
 
 //             as retry
-//            launch(Dispatchers.Main) {
+//            launch {
 //                repeat(10) {
 //                    try {
 //                        // do something
