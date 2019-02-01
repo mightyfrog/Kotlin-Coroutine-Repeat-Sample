@@ -5,9 +5,8 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
-import kotlinx.coroutines.experimental.*
-import kotlinx.coroutines.experimental.android.Main
-import kotlin.coroutines.experimental.CoroutineContext
+import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
 /**
  * @author Shigehiro Soejima
@@ -15,12 +14,14 @@ import kotlin.coroutines.experimental.CoroutineContext
 class MainActivity : AppCompatActivity(), CoroutineScope {
     private val job = Job()
 
+    override val coroutineContext: CoroutineContext get() = Dispatchers.Main + job
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { _ ->
+        fab.setOnClickListener {
             launch {
                 repeat(10) {
                     withContext(Dispatchers.Default) {
@@ -53,6 +54,4 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
         super.onDestroy()
     }
-
-    override val coroutineContext: CoroutineContext get() = Dispatchers.Main + job
 }
